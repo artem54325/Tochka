@@ -1,0 +1,26 @@
+version: '3.2'
+
+services:
+  springboot-docker-compose-app-container:
+    image: springboot-docker-compose-app:1
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - /data/springboot-docker-compose-app
+    ports:
+      - "8081:8081"
+    restart: on-failure
+#    retry:              #docker-compose up
+#      max-attempts: 10
+#      max-interval: 5000
+  postgres:
+    image: postgres:10
+    hostname: localhost
+    ports:
+    - 5432
+    environment:
+    - POSTGRES_HOST=localhost:5432/postgres
+    - POSTGRES_DB=postgres
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=1234
